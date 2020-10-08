@@ -1,0 +1,47 @@
+[bar/main]
+background = #20ffffff
+foreground = #ffffff
+font-0 = SFProDisplay:style=Medium:pixelsize=17;2
+font-1 = Font Awesome 5 Brands:style=Regular:size=14;2
+font-2 = Font Awesome 5 Free Solid:style=Solid:size=14;2
+height = 34 
+line-size = 2
+modules-left = i3
+modules-right = backlight datetime
+padding = 6
+module-margin = 5
+
+
+[module/i3]
+type = internal/i3
+label-focused-underline = #FFFFFF
+strip-wsnumber = true
+label-mode-padding = 1
+label-focused-padding = 1
+label-unfocused-padding = 1
+enable-scroll = false
+reverse-scroll = false
+
+
+
+[module/datetime]
+type = internal/date
+date = %a  %b  %d   %H:%M
+
+
+
+
+[module/backlight]
+type = custom/script
+
+exec=~/.config/polybar/backlight.sh
+
+tail=true
+interval=0
+
+scroll-up = ~/.config/polybar/backlight.sh increase
+scroll-down = ~/.config/polybar/backlight.sh decrease
+
+;format-background = ${color.shade5}
+;format-foreground = ${color.modulefg}
+format-padding = 1
