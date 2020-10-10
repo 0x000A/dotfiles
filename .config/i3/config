@@ -31,13 +31,6 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
 
-# Use pactl to adjust volume in PulseAudio.
-set $refresh_i3status killall -SIGUSR1 i3status
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
-
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
@@ -48,7 +41,8 @@ bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec dmenu_run
+#bindsym $mod+d exec dmenu_run
+bindsym $mod+d exec ~/.config/rofi/launch.sh drun
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
@@ -106,16 +100,16 @@ bindsym $mod+a focus parent
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "1     Chrome"
-set $ws2 "2     Terminals"
-set $ws3 "3"
-set $ws4 "4"
-set $ws5 "5"
-set $ws6 "6"
-set $ws7 "7"
-set $ws8 "8"
-set $ws9 "9"
-set $ws10 "10"
+set $ws1 "1      Chrome"
+set $ws2 "2      Terminals"
+set $ws3 "3     "
+set $ws4 "4     "
+set $ws5 "5     "
+set $ws6 "6     "
+set $ws7 "7     "
+set $ws8 "8    阮  Music"
+set $ws9 "9      Mails"
+set $ws10 "10      Messages"
 
 # switch to workspace
 bindsym $mod+1 workspace number $ws1
@@ -177,9 +171,9 @@ bindsym $mod+r mode "resize"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
-bar {
-        status_command i3status
-}
+#bar {
+#        status_command i3status
+#}
 
 
 
@@ -197,20 +191,42 @@ bindsym $mod+b exec $browser
 bindsym $mod+n exec $file_manager
 bindsym $mod+p exec $screenshot
 
+# bind apps to a workspace
+assign [class="discord"] $ws10
+assign [class="thunderbird"] $ws9
+
 # Remove title bar
-new_window pixel 4
-new_float pixel 0
+new_window pixel 2
+new_float pixel 2
 hide_edge_borders none
 
 # Fix keyboard layout to uk english
 #exec --no-startup-id setxkbmap -layout gb
 
+# Change gap size
+gaps outer 0
+gaps inner 8
+gaps top 30
+
+# change border colors
+# class                 border  backgr. text    indicator child_border
+client.focused          #4c7899 #285577 #ffffff #8e8e93   #0071e3
+client.focused_inactive #333333 #5f676a #ffffff #8e8e93   #5f676a
+client.unfocused        #333333 #222222 #888888 #292d2e   #222222
+client.urgent           #2f343a #900000 #ffffff #900000   #900000
+client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+client.background       #ffffff
+
+
+
 # Set wallpaper
-exec_always feh --bg-scale ~/.config/i3/wallpapers/mountains.jpg
-#exec_always feh --bg-scale ~/.config/i3/wallpapers/macos.jpg
+exec_always feh --bg-scale ~/.config/i3/wallpapers/forrest.jpg
 
 # Start polybar
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
 # Start compton
 exec $HOME/.config/i3/compton
+
+# Start notification daemon
+exec_always --no-startup-id dunst -conf ~/.config/dunst/dunstrc
