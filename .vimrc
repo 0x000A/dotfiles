@@ -11,6 +11,7 @@ syntax on
 "show line numbers
 set number
 set relativenumber
+set nu
 
 "encoding
 set encoding=utf-8
@@ -22,7 +23,7 @@ set wildmenu
 set shell=/bin/bash
 
 "using jj instead of ESC for command mode
-:inoremap jj <Esc>
+inoremap jj <Esc>
 
 "ignore compiled files
 set wildignore=*.pyc,*class
@@ -36,7 +37,16 @@ set noerrorbells visualbell t_vb=
 autocmd GUIEnter * set visualbell t_vb=
 
 "set max length for linux
-:set colorcolumn=80
+set colorcolumn=80
+
+"highlight search words as soon as you start typing
+set incsearch
+
+"start scrolling 8 lines before reaching the bottom of the screen
+set scrolloff=8
+
+"don't wrap text if a line is too long
+set nowrap
 
 
 
@@ -105,7 +115,7 @@ noremap <C-p> :bp<CR>
 noremap <C-d> :bd<CR>
 
 "list buffers
-noremap <C-i> :buffers<CR>
+noremap <C-l> :buffers<CR>
 
 
 
@@ -131,6 +141,8 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'tpope/vim-fugitive'
 "nerdtree
 Plugin 'preservim/nerdtree'
+"undotree
+Plugin 'mbbill/undotree'
 
 "all of your Plugins must be added before the following line
 call vundle#end()            "required
@@ -162,6 +174,21 @@ let g:airline_powerline_fonts = 1
 
 "set ctrl + t to open nerdtree
 noremap <C-t> :NERDTreeToggle<CR>
+
+
+
+"======================================
+"  UNDOTREE 
+"======================================
+
+"few history tweeks
+set backupdir=~/.vim/backup//
+set directory=~/.vim/swap//
+set undodir=~/.vim/undodir//
+set undofile
+
+"set ctrol + u to open undotree
+noremap <C-u> :UndotreeToggle<CR>
 
 
 
